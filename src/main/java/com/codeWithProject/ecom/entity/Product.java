@@ -1,5 +1,6 @@
 package com.codeWithProject.ecom.entity;
 
+import com.codeWithProject.ecom.dto.ProductDto;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.OnDelete;
@@ -25,5 +26,17 @@ public class Product {
     @JoinColumn(name="category_id",nullable=false)
     @OnDelete(action= OnDeleteAction.CASCADE)
     private Category category;
+
+    public ProductDto getDto(){
+        ProductDto productDto=new ProductDto();
+        productDto.setId(id);
+        productDto.setName(name);
+        productDto.setPrice(price);
+        productDto.setDescription(description);
+        productDto.setByteImg(img);
+        productDto.setCategoryId(category.getId());
+        return productDto;
+
+    }
 
 }
