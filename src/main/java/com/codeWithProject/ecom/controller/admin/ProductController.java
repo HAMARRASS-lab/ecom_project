@@ -16,7 +16,7 @@ import java.util.List;
 public class ProductController {
 
     private final AdminProductService adminProductService;
-    @PostMapping("/product")
+    @PostMapping("/productgit")
     public ResponseEntity<ProductDto> addProduct(@ModelAttribute ProductDto productDto) throws IOException {
         ProductDto productDto1=adminProductService.addProduct(productDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(productDto1);
@@ -24,6 +24,12 @@ public class ProductController {
     @GetMapping("/products")
     public ResponseEntity<List<ProductDto>> getAllProducts(){
         List<ProductDto> productDtos=adminProductService.getAllProducts();
+        return ResponseEntity.ok(productDtos);
+    }
+
+    @GetMapping("/search/{name}")
+    public ResponseEntity<List<ProductDto>> getAllProductByName(@PathVariable String name){
+        List<ProductDto> productDtos=adminProductService.getAllProductByName(name);
         return ResponseEntity.ok(productDtos);
     }
 }

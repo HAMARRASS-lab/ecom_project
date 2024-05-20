@@ -7,4 +7,6 @@ import java.util.List;
 public interface AdminProductService {
     public ProductDto addProduct(ProductDto productDto);
     public List<ProductDto> getAllProducts();
+
+    List<ProductDto> getAllProductByName( String name);
 }
