@@ -2,8 +2,11 @@ package com.codeWithProject.ecom.services.auth;
 
 import com.codeWithProject.ecom.dto.SignupRequest;
 import com.codeWithProject.ecom.dto.UserDto;
+import com.codeWithProject.ecom.entity.Order;
 import com.codeWithProject.ecom.entity.User;
+import com.codeWithProject.ecom.enums.OrderStatus;
 import com.codeWithProject.ecom.enums.UserRole;
+import com.codeWithProject.ecom.repository.OrderRepository;
 import com.codeWithProject.ecom.repository.UserRepository;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +24,9 @@ public class AuthServiceImpl implements AuthService{
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
+    @Autowired
+    private OrderRepository orderRepository;
+
     public UserDto createUser(SignupRequest signupRequest){
 
         User user=new User();
@@ -29,6 +35,14 @@ public class AuthServiceImpl implements AuthService{
         user.setPassword(bCryptPasswordEncoder.encode(signupRequest.getPassword()));
         user.setRole(UserRole.CUSTOMER);
         User createUser=userRepository.save(user);
+
+        Order order = new Order();
+        order.setAmount(0L);
+        order.setTotalAmount(0L);
+        order.setDiscount(0L);
+        order.setUser(createUser);
+        order.setOrderStatus(OrderStatus.Pending);
+        orderRepository.save(order);
 
         UserDto userDto = new UserDto();
         userDto.setId(createUser.getId());
