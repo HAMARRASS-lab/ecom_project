@@ -1,6 +1,8 @@
 package com.codeWithProject.ecom.services.cart;
 
 import com.codeWithProject.ecom.dto.AddProductInCartDto;
+import com.codeWithProject.ecom.dto.CartItemsDto;
+import com.codeWithProject.ecom.dto.OrderDto;
 import com.codeWithProject.ecom.entity.CartItems;
 import com.codeWithProject.ecom.entity.Order;
 import com.codeWithProject.ecom.entity.Product;
@@ -15,7 +17,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class CartServiceImp  implements  CartService{
@@ -61,6 +65,19 @@ public class CartServiceImp  implements  CartService{
             }
         }
     }
+       public OrderDto getCartByUserId(Long userId){
+           Order activeOrder = orderRepository.findByUserIdAndOrderStatus(userId, OrderStatus.Pending);
 
+           List<CartItemsDto> cartItemsDtoList=activeOrder.getCartItems().stream().map(CartItems::getCartDto).collect(Collectors.toList());
+           OrderDto  orderDto=new OrderDto();
+           orderDto.setAmount(activeOrder.getAmount());
+           orderDto.setId(activeOrder.getId());
+           orderDto.setOrderStatus(activeOrder.getOrderStatus());
+           orderDto.setDiscount(activeOrder.getDiscount());
+           orderDto.setTotalAmount(activeOrder.getTotalAmount());
+           orderDto.setCartItems(cartItemsDtoList);
+
+           return orderDto;
+    }
 
 }
