@@ -1,7 +1,7 @@
 package com.codeWithProject.ecom.controller.customer;
 
 import com.codeWithProject.ecom.dto.ProductDto;
-import com.codeWithProject.ecom.services.customer.CustomerProductService;
+import com.codeWithProject.ecom.repository.services.customer.CustomerProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
