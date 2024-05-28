@@ -1,4 +1,4 @@
-package com.codeWithProject.ecom.services.admin.adminproduct;
+package com.codeWithProject.ecom.repository.services.admin.adminproduct;
 
 import com.codeWithProject.ecom.dto.ProductDto;
 

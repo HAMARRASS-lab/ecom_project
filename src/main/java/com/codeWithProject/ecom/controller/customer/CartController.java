@@ -2,7 +2,7 @@ package com.codeWithProject.ecom.controller.customer;
 
 import com.codeWithProject.ecom.dto.AddProductInCartDto;
 import com.codeWithProject.ecom.dto.OrderDto;
-import com.codeWithProject.ecom.services.cart.CartService;
+import com.codeWithProject.ecom.repository.services.cart.CartService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

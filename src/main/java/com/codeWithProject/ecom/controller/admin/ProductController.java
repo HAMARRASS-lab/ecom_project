@@ -1,7 +1,7 @@
 package com.codeWithProject.ecom.controller.admin;
 
 import com.codeWithProject.ecom.dto.ProductDto;
-import com.codeWithProject.ecom.services.admin.adminproduct.AdminProductService;
+import com.codeWithProject.ecom.repository.services.admin.adminproduct.AdminProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

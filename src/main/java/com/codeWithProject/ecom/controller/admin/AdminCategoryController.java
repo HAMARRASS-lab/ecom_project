@@ -2,7 +2,7 @@ package com.codeWithProject.ecom.controller.admin;
 
 import com.codeWithProject.ecom.dto.CategoryDto;
 import com.codeWithProject.ecom.entity.Category;
-import com.codeWithProject.ecom.services.admin.category.CategoryService;
+import com.codeWithProject.ecom.repository.services.admin.category.CategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -1,4 +1,4 @@
-package com.codeWithProject.ecom.services.admin.adminproduct;
+package com.codeWithProject.ecom.repository.services.admin.adminproduct;
 
 import com.codeWithProject.ecom.dto.ProductDto;
 import com.codeWithProject.ecom.entity.Category;
@@ -7,7 +7,7 @@ import com.codeWithProject.ecom.repository.CategoryRepository;
 import com.codeWithProject.ecom.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import  java.io.IOException;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;

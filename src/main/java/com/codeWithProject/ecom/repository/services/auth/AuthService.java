@@ -1,4 +1,4 @@
-package com.codeWithProject.ecom.services.auth;
+package com.codeWithProject.ecom.repository.services.auth;
 
 import com.codeWithProject.ecom.dto.SignupRequest;
 import com.codeWithProject.ecom.dto.UserDto;

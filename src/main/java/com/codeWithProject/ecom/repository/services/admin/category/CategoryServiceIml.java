@@ -1,4 +1,4 @@
-package com.codeWithProject.ecom.services.admin.category;
+package com.codeWithProject.ecom.repository.services.admin.category;
 
 import com.codeWithProject.ecom.dto.CategoryDto;
 import com.codeWithProject.ecom.entity.Category;

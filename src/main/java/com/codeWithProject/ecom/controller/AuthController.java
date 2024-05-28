@@ -5,7 +5,7 @@ import com.codeWithProject.ecom.dto.SignupRequest;
 import com.codeWithProject.ecom.dto.UserDto;
 import com.codeWithProject.ecom.entity.User;
 import com.codeWithProject.ecom.repository.UserRepository;
-import com.codeWithProject.ecom.services.auth.AuthService;
+import com.codeWithProject.ecom.repository.services.auth.AuthService;
 import com.codeWithProject.ecom.utils.JwtUtil;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
