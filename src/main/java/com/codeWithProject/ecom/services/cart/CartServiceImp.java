@@ -1,22 +1,18 @@
-package com.codeWithProject.ecom.repository.services.cart;
+package com.codeWithProject.ecom.services.cart;
 
 import com.codeWithProject.ecom.dto.AddProductInCartDto;
 import com.codeWithProject.ecom.dto.CartItemsDto;
 import com.codeWithProject.ecom.dto.OrderDto;
-import com.codeWithProject.ecom.entity.CartItems;
-import com.codeWithProject.ecom.entity.Order;
-import com.codeWithProject.ecom.entity.Product;
-import com.codeWithProject.ecom.entity.User;
+import com.codeWithProject.ecom.entity.*;
 import com.codeWithProject.ecom.enums.OrderStatus;
-import com.codeWithProject.ecom.repository.CartItemRepository;
-import com.codeWithProject.ecom.repository.OrderRepository;
-import com.codeWithProject.ecom.repository.ProductRepository;
-import com.codeWithProject.ecom.repository.UserRepository;
+import com.codeWithProject.ecom.exceptions.ValidationException;
+import com.codeWithProject.ecom.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -34,6 +30,9 @@ public class CartServiceImp  implements  CartService{
     private CartItemRepository cartItemRepository;
     @Autowired
     private ProductRepository productRepository;
+
+    @Autowired
+    private CouponRepository couponRepository;
 
     public ResponseEntity<?>  addProductToCrt(AddProductInCartDto addProductInCartDto){
         Order activeOrder = orderRepository.findByUserIdAndOrderStatus(addProductInCartDto.getProductId(), OrderStatus.Pending);
@@ -76,8 +75,36 @@ public class CartServiceImp  implements  CartService{
            orderDto.setDiscount(activeOrder.getDiscount());
            orderDto.setTotalAmount(activeOrder.getTotalAmount());
            orderDto.setCartItems(cartItemsDtoList);
+           if(activeOrder.getCoupon() != null){
+               orderDto.setCouponName(activeOrder.getCoupon().getName());
+           }
 
            return orderDto;
+    }
+
+    public OrderDto applyCoupon(Long userId, String code){
+        Order activeOrder = orderRepository.findByUserIdAndOrderStatus(userId, OrderStatus.Pending);
+        Coupon coupon=couponRepository.findByCode(code).orElseThrow(()-> new ValidationException("Coupon not found"));
+
+        if(couponIsExpired(coupon)){
+            throw new ValidationException("Coupon has expired.");
+        }
+
+        double discountAmount=  ((coupon.getDiscount()/100.0) * activeOrder.getTotalAmount());
+        double netAmount=activeOrder.getTotalAmount() -  discountAmount;
+
+         activeOrder.setAmount((long) netAmount);
+         activeOrder.setDiscount((long) discountAmount);
+         activeOrder.setCoupon(coupon);
+         orderRepository.save(activeOrder);
+
+         return activeOrder.getOrderDto();
+    }
+    private boolean couponIsExpired(Coupon coupon){
+        Date currentdate = new Date();
+        Date expirationDate = coupon.getExpirationDate();
+
+        return  expirationDate != null && currentdate.after(expirationDate);
     }
 
 }

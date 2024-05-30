@@ -1,4 +1,4 @@
-package com.codeWithProject.ecom.repository.services.coupon;
+package com.codeWithProject.ecom.services.coupon;
 
 import com.codeWithProject.ecom.entity.Coupon;
 import com.codeWithProject.ecom.exceptions.ValidationException;
