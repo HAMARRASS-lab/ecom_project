@@ -1,4 +1,4 @@
-package com.codeWithProject.ecom.repository.services.jwt;
+package com.codeWithProject.ecom.services.jwt;
 
 import com.codeWithProject.ecom.entity.User;
 import com.codeWithProject.ecom.repository.UserRepository;

@@ -1,4 +1,4 @@
-package com.codeWithProject.ecom.repository.services.customer;
+package com.codeWithProject.ecom.services.customer;
 
 import com.codeWithProject.ecom.dto.ProductDto;
 import com.codeWithProject.ecom.entity.Product;
