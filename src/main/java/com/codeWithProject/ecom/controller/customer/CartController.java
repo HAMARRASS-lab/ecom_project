@@ -2,6 +2,7 @@ package com.codeWithProject.ecom.controller.customer;
 
 import com.codeWithProject.ecom.dto.AddProductInCartDto;
 import com.codeWithProject.ecom.dto.OrderDto;
+import com.codeWithProject.ecom.dto.PlaceOrderDto;
 import com.codeWithProject.ecom.exceptions.ValidationException;
 import com.codeWithProject.ecom.services.cart.CartService;
 import lombok.RequiredArgsConstructor;
@@ -49,5 +50,20 @@ public class CartController {
         return  ResponseEntity.status(HttpStatus.CREATED).body(cartService.increaseProductQuantity(addProductInCartDto)) ;
 
     }
+
+    @PostMapping("/deduction")
+    public ResponseEntity<OrderDto> decreaseProductQuantity(@RequestBody AddProductInCartDto addProductInCartDto){
+
+        return  ResponseEntity.status(HttpStatus.CREATED).body(cartService.decreaseProductQuantity(addProductInCartDto)) ;
+
+    }
+    @PostMapping("/placeOrder")
+    public ResponseEntity<OrderDto> placeOrder(@RequestBody PlaceOrderDto placeOrderDto){
+
+        return  ResponseEntity.status(HttpStatus.CREATED).body(cartService.placeOrder(placeOrderDto)) ;
+
+    }
+
+
 
 }
