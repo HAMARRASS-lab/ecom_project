@@ -1,4 +1,4 @@
-package com.codeWithProject.ecom.services.cart;
+package com.codeWithProject.ecom.services.customer.cart;
 
 import com.codeWithProject.ecom.dto.AddProductInCartDto;
 import com.codeWithProject.ecom.dto.OrderDto;
