@@ -4,7 +4,7 @@ import com.codeWithProject.ecom.dto.AddProductInCartDto;
 import com.codeWithProject.ecom.dto.OrderDto;
 import com.codeWithProject.ecom.dto.PlaceOrderDto;
 import com.codeWithProject.ecom.exceptions.ValidationException;
-import com.codeWithProject.ecom.services.cart.CartService;
+import com.codeWithProject.ecom.services.customer.cart.CartService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

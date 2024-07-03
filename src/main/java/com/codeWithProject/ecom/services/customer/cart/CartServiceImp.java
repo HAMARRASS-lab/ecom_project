@@ -1,4 +1,4 @@
-package com.codeWithProject.ecom.services.cart;
+package com.codeWithProject.ecom.services.customer.cart;
 
 import com.codeWithProject.ecom.dto.AddProductInCartDto;
 import com.codeWithProject.ecom.dto.CartItemsDto;
@@ -198,4 +198,36 @@ public class CartServiceImp  implements  CartService{
         }
         return  null;
     }
+
+//    public OrderDto increaseProductQuantity(AddProductInCartDto addProductInCartDto){
+//        Order activeOrder = orderRepository.findByUserIdAndOrderStatus(addProductInCartDto.getUserId(), OrderStatus.Pending);
+//        Optional<Product> otonalProduct=productRepository.findById(addProductInCartDto.getProductId());
+//
+//        Optional<CartItems> optionalCartItems=cartItemRepository.findByProductIdAndOrderIdAndUserId(
+//                addProductInCartDto.getProductId(), activeOrder.getId(),addProductInCartDto.getUserId()
+//        );
+//
+//        if(otonalProduct.isPresent() && optionalCartItems.isPresent()){
+//              CartItems cartItems=optionalCartItems.get();
+//              Product product=otonalProduct.get();
+//
+//              activeOrder.setAmount(activeOrder.getAmount()+product.getPrice());
+//              activeOrder.setTotalAmount(activeOrder.getTotalAmount()+product.getPrice());
+//
+//              cartItems.setQuantity(cartItems.getQuantity()+1);
+//              if(activeOrder.getCoupon()!=null){
+//                  double discountAmount=  ((activeOrder.getCoupon().getDiscount()/100.0) * activeOrder.getTotalAmount());
+//                  double netAmount=activeOrder.getTotalAmount() -  discountAmount;
+//
+//                  activeOrder.setAmount((long) netAmount);
+//                  activeOrder.setDiscount((long) discountAmount);
+//              }
+//              cartItemRepository.save(cartItems);
+//              orderRepository.save(activeOrder);
+//              return  activeOrder.getOrderDto();
+//
+//        }
+//        return  null;
+//    }
 }
+
