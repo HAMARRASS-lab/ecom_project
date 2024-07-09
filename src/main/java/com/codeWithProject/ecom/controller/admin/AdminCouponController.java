@@ -2,7 +2,7 @@ package com.codeWithProject.ecom.controller.admin;
 
 import com.codeWithProject.ecom.entity.Coupon;
 import com.codeWithProject.ecom.exceptions.ValidationException;
-import com.codeWithProject.ecom.services.coupon.AdminCouponService;
+import com.codeWithProject.ecom.services.admin.coupon.AdminCouponService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

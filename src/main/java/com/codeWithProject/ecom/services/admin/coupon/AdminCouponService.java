@@ -1,4 +1,4 @@
-package com.codeWithProject.ecom.services.coupon;
+package com.codeWithProject.ecom.services.admin.coupon;
 
 import com.codeWithProject.ecom.entity.Coupon;
 
