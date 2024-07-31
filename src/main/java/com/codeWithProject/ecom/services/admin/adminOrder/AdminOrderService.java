@@ -12,5 +12,7 @@ public interface AdminOrderService {
 
     List<OrderDto> getAllPlaceOrers();
 
+    OrderDto changeOrderStatus(Long orderId, String status);
+
 
 }
