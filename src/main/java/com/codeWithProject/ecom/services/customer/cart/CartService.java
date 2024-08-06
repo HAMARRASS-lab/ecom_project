@@ -5,6 +5,8 @@ import com.codeWithProject.ecom.dto.OrderDto;
 import com.codeWithProject.ecom.dto.PlaceOrderDto;
 import org.springframework.http.ResponseEntity;
 
+import java.util.List;
+
 public interface CartService {
 
     ResponseEntity<?> addProductToCrt(AddProductInCartDto addProductInCartDto);
@@ -18,4 +20,5 @@ public interface CartService {
 
     OrderDto placeOrder(PlaceOrderDto placeOrderDto);
 
+    public List<OrderDto> getMyPlaceOrders(Long userId);
 }
