@@ -199,6 +199,11 @@ public class CartServiceImp  implements  CartService{
         return  null;
     }
 
+    @Override
+    public List<OrderDto> getMyPlaceOrders(Long userId) {
+        return  orderRepository.findAllByOrderStatusIn(userId, List.of(OrderStatus.Placed,OrderStatus.Shipped,OrderStatus.Delivered)).stream().map(Order::getOrderDto).collect(Collectors.toList());
+    }
+
 //    public OrderDto increaseProductQuantity(AddProductInCartDto addProductInCartDto){
 //        Order activeOrder = orderRepository.findByUserIdAndOrderStatus(addProductInCartDto.getUserId(), OrderStatus.Pending);
 //        Optional<Product> otonalProduct=productRepository.findById(addProductInCartDto.getProductId());
@@ -228,6 +233,11 @@ public class CartServiceImp  implements  CartService{
 //
 //        }
 //        return  null;
+//    }
+
+
+//    public List<OrderDto> getMyPlacedOrders(Long userId){
+//    return  orderRepository.findAllByOrderStatusIn(userId, List.of(OrderStatus.Placed,OrderStatus.Shipped,OrderStatus.Delivered)).stream().map(Order::getOrderDto).collect(Collectors.toList());
 //    }
 }
 
