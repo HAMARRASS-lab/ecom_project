@@ -1,7 +1,9 @@
 package com.codeWithProject.ecom.controller.admin;
 
+import com.codeWithProject.ecom.dto.FAQDto;
 import com.codeWithProject.ecom.dto.ProductDto;
 import com.codeWithProject.ecom.services.admin.adminproduct.AdminProductService;
+import com.codeWithProject.ecom.services.admin.faq.FAQService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +18,9 @@ import java.util.List;
 public class ProductController {
 
     private final AdminProductService adminProductService;
+
+
+    private final FAQService faqService;
     @PostMapping("/productgit")
     public ResponseEntity<ProductDto> addProduct(@ModelAttribute ProductDto productDto) throws IOException {
         ProductDto productDto1=adminProductService.addProduct(productDto);
@@ -39,5 +44,10 @@ public class ProductController {
               return ResponseEntity.noContent().build();
           }
           return ResponseEntity.notFound().build();
+    }
+
+    @PostMapping("/faq/{productId&}")
+    public ResponseEntity<FAQDto> postFAQ(@PathVariable Long productId, @RequestBody FAQDto faqDto){
+        return ResponseEntity.status(HttpStatus.CREATED).body(faqService.postFAQ(productId,faqDto));
     }
 }
