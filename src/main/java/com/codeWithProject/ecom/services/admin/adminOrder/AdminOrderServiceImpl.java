@@ -20,7 +20,8 @@ public class AdminOrderServiceImpl implements AdminOrderService {
     private  final OrderRepository orderRepository;
     public List<OrderDto> getAllPlaceOrers(){
 
-       List<Order> orderList=orderRepository.findAllByOrderStatusIn(userId, List.of(OrderStatus.Placed,OrderStatus.Shipped, OrderStatus.Delivered));
+        Long userId=null;
+        List<Order> orderList=orderRepository.findAllByOrderStatusIn(userId, List.of(OrderStatus.Placed,OrderStatus.Shipped, OrderStatus.Delivered));
        return orderList.stream().map(Order::getOrderDto).collect(Collectors.toList());
     }
 
