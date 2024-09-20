@@ -1,7 +1,5 @@
 package com.codeWithProject.ecom.dto;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Lob;
 import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -22,6 +20,8 @@ public class ProductDto {
     private String categoryName;
 
     private MultipartFile img;
+
+    private  Long quantity;
 
 
 
