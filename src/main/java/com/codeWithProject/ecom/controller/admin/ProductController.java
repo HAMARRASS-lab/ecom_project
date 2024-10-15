@@ -18,9 +18,8 @@ import java.util.List;
 public class ProductController {
 
     private final AdminProductService adminProductService;
-
-
     private final FAQService faqService;
+
     @PostMapping("/productgit")
     public ResponseEntity<ProductDto> addProduct(@ModelAttribute ProductDto productDto) throws IOException {
         ProductDto productDto1=adminProductService.addProduct(productDto);
@@ -46,7 +45,7 @@ public class ProductController {
           return ResponseEntity.notFound().build();
     }
 
-    @PostMapping("/faq/{productId&}")
+    @PostMapping("/faq/{productId}")
     public ResponseEntity<FAQDto> postFAQ(@PathVariable Long productId, @RequestBody FAQDto faqDto){
         return ResponseEntity.status(HttpStatus.CREATED).body(faqService.postFAQ(productId,faqDto));
     }
