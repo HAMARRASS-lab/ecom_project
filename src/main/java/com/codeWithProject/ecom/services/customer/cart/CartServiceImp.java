@@ -205,6 +205,16 @@ public class CartServiceImp  implements  CartService{
    return null;
     }
 
+    public OrderDto searchOrderByTrackingId(UUID trackingId){
+        Optional<Order> optionalOrder=orderRepository.findByTrackingId(trackingId);
+        if(optionalOrder.isPresent()){
+            return  optionalOrder.get().getOrderDto();
+        }
+
+        return null;
+
+    }
+
 //    public OrderDto increaseProductQuantity(AddProductInCartDto addProductInCartDto){
 //        Order activeOrder = orderRepository.findByUserIdAndOrderStatus(addProductInCartDto.getUserId(), OrderStatus.Pending);
 //        Optional<Product> otonalProduct=productRepository.findById(addProductInCartDto.getProductId());
