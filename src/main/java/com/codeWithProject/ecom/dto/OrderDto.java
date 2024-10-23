@@ -1,9 +1,7 @@
 package com.codeWithProject.ecom.dto;
 
-import com.codeWithProject.ecom.entity.CartItems;
-import com.codeWithProject.ecom.entity.User;
+
 import com.codeWithProject.ecom.enums.OrderStatus;
-import jakarta.persistence.*;
 import lombok.Data;
 
 import java.util.Date;
