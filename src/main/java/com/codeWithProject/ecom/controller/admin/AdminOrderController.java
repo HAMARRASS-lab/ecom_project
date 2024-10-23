@@ -1,5 +1,6 @@
 package com.codeWithProject.ecom.controller.admin;
 
+import com.codeWithProject.ecom.dto.AnalytecsResponse;
 import com.codeWithProject.ecom.dto.OrderDto;
 import com.codeWithProject.ecom.services.admin.adminOrder.AdminOrderService;
 import lombok.RequiredArgsConstructor;
@@ -35,4 +36,8 @@ public class AdminOrderController {
 
     }
 
+    @GetMapping("/order/analytics")
+    public ResponseEntity<AnalytecsResponse> getAnalytics(){
+        return ResponseEntity.ok(adminOrderService.calculateAnalytics());
+    }
 }

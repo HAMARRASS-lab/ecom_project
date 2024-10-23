@@ -21,6 +21,7 @@ public class Order {
     private Date date ;
     private Long amount;
     private String address;
+    @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus;
     private Long totalAmount;
     private Long discount;
