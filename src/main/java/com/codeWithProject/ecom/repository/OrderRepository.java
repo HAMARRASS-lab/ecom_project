@@ -15,13 +15,13 @@ public interface  OrderRepository extends JpaRepository<Order, Long> {
 
     Order findByUserIdAndOrderStatus(Long userId, OrderStatus orderStatus);
 
-   // List<Order> findAllByOrderStatusInn(Long userId, List<OrderStatus> orderStatusList);
+    List<Order> findAllByOrderStatusIn(List<OrderStatus> orderStatusList);
 
     List<Order> findByUserIdAndOrderStatusIn(Long userId, List<OrderStatus> orderStatus);
 
     Optional<Order> findByTrackingId(UUID TrackingId);
 
-    List<Order> findByDateBetweenAndStatus(Date startOfMonth, Date endOfMonth, OrderStatus status);
+    List<Order> findByDateBetweenAndOrderStatus(Date startOfMonth, Date endOfMonth, OrderStatus status);
 
     Long  countByOrderStatus(OrderStatus status);
 }

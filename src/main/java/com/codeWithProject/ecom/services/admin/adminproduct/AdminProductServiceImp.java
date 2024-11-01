@@ -20,16 +20,16 @@ public class AdminProductServiceImp implements AdminProductService {
     private final ProductRepository productRepository;
     private final CategoryRepository categoryRepository;
 
-    public ProductDto addProduct(ProductDto productDto){
+    public ProductDto addProduct(ProductDto productDto) throws IOException {
         Product product=new Product();
-        product.setName(product.getName());
-        product.setDescription(product.getDescription());
-        product.setPrice(product.getPrice());
-        byte[] imgBytes = product.getImg();
-        product.setImg(imgBytes);
+        product.setName(productDto.getName());
+        product.setDescription(productDto.getDescription());
+        product.setPrice(productDto.getPrice());
+        product.setImg(productDto.getImg().getBytes());
+
           Category category=categoryRepository.findById(productDto.getCategoryId()).orElseThrow();
 
-          product.setCategory((category));
+          product.setCategory(category);
           return productRepository.save(product).getDto();
     }
 
@@ -39,7 +39,7 @@ public class AdminProductServiceImp implements AdminProductService {
     }
 
     public List<ProductDto> getAllProductByName( String name){
-        List<Product> products=productRepository.findAllByNameContaining(name);
+        List<Product> products = productRepository.findAllByNameContaining(name);
         return  products.stream().map(Product::getDto).collect(Collectors.toList());
     }
 
@@ -53,7 +53,7 @@ public class AdminProductServiceImp implements AdminProductService {
     }
 
     public ProductDto getProductById(Long productId){
-      Optional<Product> optionalProduct=productRepository.findById(productId);
+      Optional<Product> optionalProduct = productRepository.findById(productId);
 
       if(optionalProduct.isPresent()){
           return optionalProduct.get().getDto();
@@ -61,17 +61,20 @@ public class AdminProductServiceImp implements AdminProductService {
           return  null;
       }
     }
+
     public ProductDto updateProduct(Long productId, ProductDto productDto) {
-        Optional<Product> optionalProduct=productRepository.findById(productId);
-        Optional<Category> optionalCategory= categoryRepository.findById(productDto.getCategoryId());
+
+        Optional<Product> optionalProduct = productRepository.findById(productId);
+        Optional<Category> optionalCategory = categoryRepository.findById(productDto.getCategoryId());
+
         if(optionalProduct.isPresent() && optionalCategory.isPresent()){
-            Product product=optionalProduct.get();
+            Product product = optionalProduct.get();
             product.setName(productDto.getName());
             product.setPrice(productDto.getPrice());
             product.setDescription(productDto.getDescription());
             product.setCategory(optionalCategory.get());
 
-            if(productDto.getImg()!=null){
+            if(productDto.getImg() != null){
                 try {
                     product.setImg(productDto.getImg().getBytes());
                 } catch (IOException e) {

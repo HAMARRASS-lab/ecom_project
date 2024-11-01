@@ -6,25 +6,31 @@ import com.codeWithProject.ecom.entity.Order;
 import com.codeWithProject.ecom.enums.OrderStatus;
 import com.codeWithProject.ecom.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.*;
+import java.util.stream.Collectors;
 
 
 @Service
-@RequiredArgsConstructor
-public class AdminOrderServiceImpl implements AdminOrderService {
 
+public class AdminOrderServiceImpl implements AdminOrderService {
 
     private final OrderRepository orderRepository;
 
-    public List<OrderDto> getAllPlaceOrers() {
+    @Autowired
+    public AdminOrderServiceImpl(OrderRepository orderRepository) {
+        this.orderRepository = orderRepository;
+    }
 
-        //   Long userId=null;
-        // List<Order> orderList=orderRepository.findAllByOrderStatusInn(userId, List.of(OrderStatus.Placed,OrderStatus.Shipped, OrderStatus.Delivered));
-        // return orderList.stream().map(Order::getOrderDto).collect(Collectors.toList());
-        return null;
+    public List<OrderDto> getAllPlaceOrders() {
+
+       // Long userId=null;
+        List<Order> orderList = orderRepository.findAllByOrderStatusIn( List.of(OrderStatus.Placed,OrderStatus.Shipped, OrderStatus.Delivered));
+        return orderList.stream().map(Order::getOrderDto).collect(Collectors.toList());
+
     }
 
     public OrderDto changeOrderStatus(Long orderId, String status) {
@@ -46,18 +52,18 @@ public class AdminOrderServiceImpl implements AdminOrderService {
     }
 
     public AnalytecsResponse calculateAnalytics(){
-        LocalDate currentDate=LocalDate.now();
-        LocalDate previousMonthDate=currentDate.minusMonths(1);
+        LocalDate currentDate = LocalDate.now();
+        LocalDate previousMonthDate = currentDate.minusMonths(1);
 
-        Long currentMonthOrders= getTotalOrdersForMonth(currentDate.getDayOfMonth(), currentDate.getYear());
-        Long previousMonthOrders= getTotalOrdersForMonth(previousMonthDate.getMonthValue(),previousMonthDate.getYear());
+        Long currentMonthOrders = getTotalOrdersForMonth(currentDate.getDayOfMonth(), currentDate.getYear());
+        Long previousMonthOrders = getTotalOrdersForMonth(previousMonthDate.getMonthValue(),previousMonthDate.getYear());
 
         Long currentMonthEarnings = getTotalEarningsForMonth(currentDate.getDayOfMonth(), currentDate.getYear());
-        Long previousMonthEarnings=getTotalEarningsForMonth(previousMonthDate.getMonthValue(),previousMonthDate.getYear());
+        Long previousMonthEarnings = getTotalEarningsForMonth(previousMonthDate.getMonthValue(),previousMonthDate.getYear());
 
-        Long placed=orderRepository.countByOrderStatus(OrderStatus.Placed);
-        Long shipped=orderRepository.countByOrderStatus(OrderStatus.Shipped);
-        Long delivered=orderRepository.countByOrderStatus(OrderStatus.Delivered);
+        Long placed = orderRepository.countByOrderStatus(OrderStatus.Placed);
+        Long shipped = orderRepository.countByOrderStatus(OrderStatus.Shipped);
+        Long delivered = orderRepository.countByOrderStatus(OrderStatus.Delivered);
 
         return new AnalytecsResponse(placed, shipped, delivered, currentMonthOrders,previousMonthOrders,currentMonthEarnings,previousMonthEarnings);
 
@@ -82,7 +88,7 @@ public class AdminOrderServiceImpl implements AdminOrderService {
 
         Date endOfMonth=calendar.getTime();
 
-        List<Order> orders=orderRepository.findByDateBetweenAndStatus(startOfMonth,endOfMonth, OrderStatus.Delivered);
+        List<Order> orders=orderRepository.findByDateBetweenAndOrderStatus(startOfMonth,endOfMonth, OrderStatus.Delivered);
 
         return (long) orders.size();
     }
@@ -105,11 +111,11 @@ public class AdminOrderServiceImpl implements AdminOrderService {
 
         Date endOfMonth=calendar.getTime();
 
-        List<Order> orders=orderRepository.findByDateBetweenAndStatus(startOfMonth,endOfMonth, OrderStatus.Delivered);
+        List<Order> orders = orderRepository.findByDateBetweenAndOrderStatus(startOfMonth,endOfMonth, OrderStatus.Delivered);
 
-      Long sum=0L;
+      Long sum = 0L;
       for(Order order : orders){
-          sum +=order.getAmount();
+          sum += order.getAmount();
       }
       return  sum;
     }

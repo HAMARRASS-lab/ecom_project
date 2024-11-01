@@ -30,14 +30,14 @@ public class ReviewServiceImpl  implements  ReviewService{
 
 
     public OrderProductResponseDto getOrderProductDetailsByOrder(Long orderId){
-        Optional<Order> optionalOrder=orderRepository.findById(orderId);
-        OrderProductResponseDto orderProductResponseDto=new OrderProductResponseDto();
+        Optional<Order> optionalOrder = orderRepository.findById(orderId);
+        OrderProductResponseDto orderProductResponseDto = new OrderProductResponseDto();
         if(optionalOrder.isPresent()){
           orderProductResponseDto.setOrderAmount(optionalOrder.get().getAmount());
 
-         List<ProductDto> productDtoList = new ArrayList<>();
+          List<ProductDto> productDtoList = new ArrayList<>();
           for(CartItems cartItems: optionalOrder.get().getCartItems()){
-            ProductDto productDto=new ProductDto();
+            ProductDto productDto = new ProductDto();
             productDto.setId(cartItems.getProduct().getId());
             productDto.setName(cartItems.getProduct().getName());
             productDto.setPrice(cartItems.getPrice());
@@ -54,7 +54,7 @@ public class ReviewServiceImpl  implements  ReviewService{
     public ReviewDto giveReview(ReviewDto reviewDto) throws IOException {
         Optional<Product> optionalProduct = productRepository.findById(reviewDto.getProductId());
 
-        Optional<User> optionalUser=userRepository.findById(reviewDto.getUserId());
+        Optional<User> optionalUser = userRepository.findById(reviewDto.getUserId());
 
          if(optionalProduct.isPresent() && optionalUser.isPresent()){
              Review review =new Review();

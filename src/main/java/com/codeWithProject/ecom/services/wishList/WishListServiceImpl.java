@@ -25,8 +25,8 @@ public class WishListServiceImpl implements WishListService{
     private final WishListRepository wishListRepository;
 
     public WishListDto addProductToWishList(WishListDto wishListDto){
-        Optional<Product> optionalProduct=productRepository.findById(wishListDto.getProductId());
-        Optional<User> optionalUser=userRepository.findById(wishListDto.getUserId());
+        Optional<Product> optionalProduct = productRepository.findById(wishListDto.getProductId());
+        Optional<User> optionalUser = userRepository.findById(wishListDto.getUserId());
 
         if(optionalProduct.isPresent() && optionalUser.isPresent()){
             Wishlist wishlist=new Wishlist();

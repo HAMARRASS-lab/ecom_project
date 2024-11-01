@@ -16,12 +16,12 @@ import java.util.List;
 public class AdminCouponController {
 
 
-    private   final AdminCouponService adminCouponService;
+    private  final AdminCouponService adminCouponService;
 
     @PostMapping
     public ResponseEntity<?> createCoupon(@RequestBody Coupon coupon){
              try{
-                 Coupon createdCoupon=adminCouponService.createCoupon(coupon);
+                 Coupon createdCoupon = adminCouponService.createCoupon(coupon);
 
                  return  ResponseEntity.ok(createdCoupon);
              }catch (ValidationException ex){

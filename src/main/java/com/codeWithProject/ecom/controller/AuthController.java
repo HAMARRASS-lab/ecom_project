@@ -62,8 +62,8 @@ public class AuthController {
                      .toString()
              );
 
-             response.addHeader("Access-Contorl-Expose-Headers","Authorizatin");
-             response.addHeader("Access-Contorl-AllowHeaders", "Authorization,X-PINGOTHER,Origin,"+
+             response.addHeader("Access-Control-Expose-Headers","Authorization");
+             response.addHeader("Access-Control-AllowHeaders", "Authorization,X-PING-OTHER,Origin,"+
                      "X-Requested-With, Content-Type,Accept,X-Custom-header");
              response.addHeader(HEADER_STRING, TOKEN_PREFIX+jwt);
          }
@@ -75,7 +75,7 @@ public class AuthController {
         return new ResponseEntity<>("User already exists", HttpStatus.NOT_ACCEPTABLE);
 
     }
-        UserDto userDto=authService.createUser(signupRequest);
+        UserDto userDto = authService.createUser(signupRequest);
     return new ResponseEntity<>(userDto,HttpStatus.OK);
     }
 }

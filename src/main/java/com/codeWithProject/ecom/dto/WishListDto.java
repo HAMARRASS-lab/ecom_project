@@ -1,7 +1,5 @@
 package com.codeWithProject.ecom.dto;
 
-import com.codeWithProject.ecom.entity.Product;
-import com.codeWithProject.ecom.entity.User;
 import lombok.Data;
 
 @Data

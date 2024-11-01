@@ -1,6 +1,7 @@
 package com.codeWithProject.ecom.entity;
 
 import com.codeWithProject.ecom.dto.ProductDto;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.OnDelete;
@@ -25,10 +26,11 @@ public class Product {
     @ManyToOne(fetch = FetchType.LAZY,optional = false)
     @JoinColumn(name="category_id",nullable=false)
     @OnDelete(action= OnDeleteAction.CASCADE)
+    @JsonIgnore
     private Category category;
 
     public ProductDto getDto(){
-        ProductDto productDto=new ProductDto();
+        ProductDto productDto = new ProductDto();
         productDto.setId(id);
         productDto.setName(name);
         productDto.setPrice(price);

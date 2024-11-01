@@ -7,10 +7,9 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-
 public interface FAQRepository extends JpaRepository<FAQ, Long> {
 
-    //List<FAQ> findAlProductId(Long productId);
+    List<FAQ> findAllByProductId(Long productId);
 
 
 }

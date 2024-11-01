@@ -18,21 +18,24 @@ import org.springframework.stereotype.Service;
 @Service
 public class AuthServiceImpl implements AuthService{
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
-    @Autowired
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    @Autowired
-    private OrderRepository orderRepository;
+    private final OrderRepository orderRepository;
+
+    public AuthServiceImpl(UserRepository userRepository, BCryptPasswordEncoder bCryptPasswordEncoder, OrderRepository orderRepository) {
+        this.userRepository = userRepository;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+        this.orderRepository = orderRepository;
+    }
 
     public UserDto createUser(SignupRequest signupRequest){
 
         User user=new User();
         user.setName(signupRequest.getName());
         user.setEmail(signupRequest.getEmail());
-        user.setPassword(bCryptPasswordEncoder.encode(signupRequest.getPassword()));
+        user.setPassword(new BCryptPasswordEncoder().encode(signupRequest.getPassword()));
         user.setRole(UserRole.CUSTOMER);
         User createUser=userRepository.save(user);
 
@@ -59,9 +62,10 @@ public class AuthServiceImpl implements AuthService{
         if(adminAccount == null){
             User user = new User();
             user.setEmail("admin@test.com");
-            user.setName("admine");
-            user.setPassword(bCryptPasswordEncoder.encode("admin1234"));
+            user.setName("admin");
             user.setRole(UserRole.ADMIN);
+            user.setPassword(new BCryptPasswordEncoder().encode("admin1234"));
+
             userRepository.save(user);
         }
     }
