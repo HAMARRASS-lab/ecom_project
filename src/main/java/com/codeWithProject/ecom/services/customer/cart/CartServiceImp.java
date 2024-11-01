@@ -22,23 +22,27 @@ import java.util.stream.Collectors;
 @Service
 public class CartServiceImp  implements  CartService{
 
-    @Autowired
-    private OrderRepository orderRepository;
+    private final OrderRepository orderRepository;
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
-    @Autowired
-    private CartItemRepository cartItemRepository;
-    @Autowired
-    private ProductRepository productRepository;
+    private final CartItemRepository cartItemRepository;
 
-    @Autowired
-    private CouponRepository couponRepository;
+    private final ProductRepository productRepository;
 
-    public ResponseEntity<?>  addProductToCrt(AddProductInCartDto addProductInCartDto){
+    private final CouponRepository couponRepository;
+
+    public CartServiceImp(UserRepository userRepository, CartItemRepository cartItemRepository, OrderRepository orderRepository, ProductRepository productRepository, CouponRepository couponRepository) {
+        this.userRepository = userRepository;
+        this.cartItemRepository = cartItemRepository;
+        this.orderRepository = orderRepository;
+        this.productRepository = productRepository;
+        this.couponRepository = couponRepository;
+    }
+
+    public ResponseEntity<?>  addProductToCart(AddProductInCartDto addProductInCartDto){
         Order activeOrder = orderRepository.findByUserIdAndOrderStatus(addProductInCartDto.getProductId(), OrderStatus.Pending);
-        Optional<CartItems> optionalCartItems=cartItemRepository.findByProductIdAndOrderIdAndUserId(addProductInCartDto.getProductId(), activeOrder.getId(), addProductInCartDto.getUserId());
+        Optional<CartItems> optionalCartItems = cartItemRepository.findByProductIdAndOrderIdAndUserId(addProductInCartDto.getProductId(), activeOrder.getId(), addProductInCartDto.getUserId());
 
 
         if(optionalCartItems.isPresent()){
@@ -69,7 +73,7 @@ public class CartServiceImp  implements  CartService{
        public OrderDto getCartByUserId(Long userId){
            Order activeOrder = orderRepository.findByUserIdAndOrderStatus(userId, OrderStatus.Pending);
 
-           List<CartItemsDto> cartItemsDtoList=activeOrder.getCartItems().stream().map(CartItems::getCartDto).collect(Collectors.toList());
+           List<CartItemsDto> cartItemsDtoList = activeOrder.getCartItems().stream().map(CartItems::getCartDto).collect(Collectors.toList());
            OrderDto  orderDto=new OrderDto();
            orderDto.setAmount(activeOrder.getAmount());
            orderDto.setId(activeOrder.getId());
@@ -93,7 +97,7 @@ public class CartServiceImp  implements  CartService{
         }
 
         double discountAmount=  ((coupon.getDiscount()/100.0) * activeOrder.getTotalAmount());
-        double netAmount=activeOrder.getTotalAmount() -  discountAmount;
+        double netAmount = activeOrder.getTotalAmount() -  discountAmount;
 
          activeOrder.setAmount((long) netAmount);
          activeOrder.setDiscount((long) discountAmount);
@@ -111,30 +115,30 @@ public class CartServiceImp  implements  CartService{
 
     public OrderDto increaseProductQuantity(AddProductInCartDto addProductInCartDto){
         Order activeOrder = orderRepository.findByUserIdAndOrderStatus(addProductInCartDto.getUserId(), OrderStatus.Pending);
-        Optional<Product> optionalProduct=productRepository.findById(addProductInCartDto.getProductId());
+        Optional<Product> optionalProduct = productRepository.findById(addProductInCartDto.getProductId());
 
-        Optional<CartItems> optionalCartItems=cartItemRepository.findByProductIdAndOrderIdAndUserId(
+        Optional<CartItems> optionalCartItems = cartItemRepository.findByProductIdAndOrderIdAndUserId(
                 addProductInCartDto.getProductId(), activeOrder.getId(), addProductInCartDto.getUserId()
         );
 
         if(optionalProduct.isPresent() && optionalCartItems.isPresent()){
-              CartItems cartItems=optionalCartItems.get();
-              Product product=optionalProduct.get();
+              CartItems cartItem = optionalCartItems.get();
+              Product product = optionalProduct.get();
 
               activeOrder.setAmount(activeOrder.getAmount() + product.getPrice());
               activeOrder.setTotalAmount(activeOrder.getTotalAmount() + product.getPrice());
 
-              cartItems.setQuantity(cartItems.getQuantity() + 1);
+              cartItem.setQuantity(cartItem.getQuantity() + 1);
 
               if(activeOrder.getCoupon() != null){
-                  double discountAmount=  ((activeOrder.getCoupon().getDiscount()/100.0) * activeOrder.getTotalAmount());
+                  double discountAmount=  ((activeOrder.getCoupon().getDiscount() / 100.0) * activeOrder.getTotalAmount());
                   double netAmount=activeOrder.getTotalAmount() -  discountAmount;
 
                   activeOrder.setAmount((long) netAmount);
                   activeOrder.setDiscount((long) discountAmount);
               }
 
-              cartItemRepository.save(cartItems);
+              cartItemRepository.save(cartItem);
               orderRepository.save(activeOrder);
               return activeOrder.getOrderDto();
         }
@@ -143,15 +147,15 @@ public class CartServiceImp  implements  CartService{
 
     public OrderDto decreaseProductQuantity(AddProductInCartDto addProductInCartDto){
         Order activeOrder = orderRepository.findByUserIdAndOrderStatus(addProductInCartDto.getUserId(), OrderStatus.Pending);
-        Optional<Product> optionalProduct=productRepository.findById(addProductInCartDto.getProductId());
+        Optional<Product> optionalProduct = productRepository.findById(addProductInCartDto.getProductId());
 
-        Optional<CartItems> optionalCartItems=cartItemRepository.findByProductIdAndOrderIdAndUserId(
+        Optional<CartItems> optionalCartItems = cartItemRepository.findByProductIdAndOrderIdAndUserId(
                 addProductInCartDto.getProductId(), activeOrder.getId(), addProductInCartDto.getUserId()
         );
 
         if(optionalProduct.isPresent() && optionalCartItems.isPresent()){
-            CartItems cartItems=optionalCartItems.get();
-            Product product=optionalProduct.get();
+            CartItems cartItems = optionalCartItems.get();
+            Product product = optionalProduct.get();
 
             activeOrder.setAmount(activeOrder.getAmount() - product.getPrice());
             activeOrder.setTotalAmount(activeOrder.getTotalAmount() - product.getPrice());
@@ -159,7 +163,7 @@ public class CartServiceImp  implements  CartService{
             cartItems.setQuantity(cartItems.getQuantity() - 1);
 
             if(activeOrder.getCoupon() != null){
-                double discountAmount=  ((activeOrder.getCoupon().getDiscount()/100.0) * activeOrder.getTotalAmount());
+                double discountAmount =  ((activeOrder.getCoupon().getDiscount() / 100.0) * activeOrder.getTotalAmount());
                 double netAmount=activeOrder.getTotalAmount() -  discountAmount;
 
                 activeOrder.setAmount((long) netAmount);
@@ -175,7 +179,8 @@ public class CartServiceImp  implements  CartService{
 
     public OrderDto placeOrder(PlaceOrderDto placeOrderDto){
         Order activeOrder = orderRepository.findByUserIdAndOrderStatus(placeOrderDto.getUserId(), OrderStatus.Pending);
-        Optional<User> optionalUser=userRepository.findById(placeOrderDto.getUserId());
+        Optional<User> optionalUser = userRepository.findById(placeOrderDto.getUserId());
+
         if(optionalUser.isPresent()){
             activeOrder.setOrderDescription(placeOrderDto.getOrderDescription());
             activeOrder.setAddress(placeOrderDto.getAddress());
@@ -201,8 +206,8 @@ public class CartServiceImp  implements  CartService{
 
     @Override
     public List<OrderDto> getMyPlaceOrders(Long userId) {
-       // return  orderRepository.findAllByOrderStatusInn(userId, List.of(OrderStatus.Placed,OrderStatus.Shipped,OrderStatus.Delivered)).stream().map(Order::getOrderDto).collect(Collectors.toList());
-   return null;
+        return  orderRepository.findByUserIdAndOrderStatusIn(userId, List.of(OrderStatus.Placed,OrderStatus.Shipped,OrderStatus.Delivered)).stream().map(Order::getOrderDto).collect(Collectors.toList());
+
     }
 
     public OrderDto searchOrderByTrackingId(UUID trackingId){

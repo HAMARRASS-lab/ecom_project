@@ -4,5 +4,5 @@ import com.codeWithProject.ecom.dto.FAQDto;
 
 public interface FAQService {
 
-    public FAQDto postFAQ(Long productId, FAQDto faqDto);
+     FAQDto postFAQ(Long productId, FAQDto faqDto);
 }

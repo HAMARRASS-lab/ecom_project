@@ -21,6 +21,7 @@ public class CategoryServiceIml implements  CategoryService{
     return  categoryRepository.save(category);
   }
       public List<Category> getAllCategories(){
-         return categoryRepository.findAll();
+
+      return categoryRepository.findAll();
       }
 }

@@ -7,11 +7,11 @@ import java.util.List;
 
 public interface CustomerProductService {
 
-    public List<ProductDto> getAllProducts();
+    List<ProductDto> getAllProducts();
 
 
-    public List<ProductDto> searchProductByTitle(String title);
+     List<ProductDto> searchProductByTitle(String title);
 
-    public ProductDetailsDto getProductDetailsById(Long productId);
+     ProductDetailsDto getProductDetailsById(Long productId);
 
 }

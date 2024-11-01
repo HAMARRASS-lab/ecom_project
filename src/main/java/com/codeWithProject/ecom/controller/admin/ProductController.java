@@ -20,53 +20,55 @@ public class ProductController {
     private final AdminProductService adminProductService;
     private final FAQService faqService;
 
-    @PostMapping("/productgit")
+    @PostMapping("/product")
     public ResponseEntity<ProductDto> addProduct(@ModelAttribute ProductDto productDto) throws IOException {
-        ProductDto productDto1=adminProductService.addProduct(productDto);
+        ProductDto productDto1 = adminProductService.addProduct(productDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(productDto1);
     }
+
     @GetMapping("/products")
-    public ResponseEntity<List<ProductDto>> getAllProducts(){
-        List<ProductDto> productDtos=adminProductService.getAllProducts();
+    public ResponseEntity<List<ProductDto>> getAllProducts() {
+        List<ProductDto> productDtos = adminProductService.getAllProducts();
         return ResponseEntity.ok(productDtos);
     }
 
     @GetMapping("/search/{name}")
-    public ResponseEntity<List<ProductDto>> getAllProductByName(@PathVariable String name){
-        List<ProductDto> productDtos=adminProductService.getAllProductByName(name);
+    public ResponseEntity<List<ProductDto>> getAllProductByName(@PathVariable String name) {
+        List<ProductDto> productDtos = adminProductService.getAllProductByName(name);
         return ResponseEntity.ok(productDtos);
     }
-@DeleteMapping("/product/{productId}")
-    public ResponseEntity<Void> deleteProduct(@PathVariable Long productId){
-          boolean deleted=adminProductService.deleteProduct(productId);
-          if(deleted){
-              return ResponseEntity.noContent().build();
-          }
-          return ResponseEntity.notFound().build();
+
+    @DeleteMapping("/product/{productId}")
+    public ResponseEntity<Void> deleteProduct(@PathVariable Long productId) {
+        boolean deleted = adminProductService.deleteProduct(productId);
+        if (deleted) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.notFound().build();
     }
 
     @PostMapping("/faq/{productId}")
-    public ResponseEntity<FAQDto> postFAQ(@PathVariable Long productId, @RequestBody FAQDto faqDto){
-        return ResponseEntity.status(HttpStatus.CREATED).body(faqService.postFAQ(productId,faqDto));
+    public ResponseEntity<FAQDto> postFAQ(@PathVariable Long productId, @RequestBody FAQDto faqDto) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(faqService.postFAQ(productId, faqDto));
     }
 
     @GetMapping("/product/{$productId}")
-    public ResponseEntity<ProductDto> getProductById(@PathVariable Long productId){
-         ProductDto productDto=adminProductService.getProductById(productId);
-         if(productDto !=null){
-             return  ResponseEntity.ok(productDto);
-         }else{
+    public ResponseEntity<ProductDto> getProductById(@PathVariable Long productId) {
+        ProductDto productDto = adminProductService.getProductById(productId);
+        if (productDto != null) {
+            return ResponseEntity.ok(productDto);
+        } else {
             return ResponseEntity.notFound().build();
-         }
+        }
     }
 
-    @PutMapping("/product/{$productId}")
-    public ResponseEntity<ProductDto> updateProduct(@PathVariable Long productId, @ModelAttribute ProductDto productDto) throws IOException{
+    @PutMapping("/product/{productId}")
+    public ResponseEntity<ProductDto> updateProduct(@PathVariable Long productId, @ModelAttribute ProductDto productDto) throws IOException {
 
-    ProductDto updateProduct =adminProductService.updateProduct(productId,productDto);
-        if(updateProduct !=null){
-            return  ResponseEntity.ok(updateProduct);
-        }else{
+        ProductDto updateProduct = adminProductService.updateProduct(productId, productDto);
+        if (updateProduct != null) {
+            return ResponseEntity.ok(updateProduct);
+        } else {
             return ResponseEntity.notFound().build();
         }
 

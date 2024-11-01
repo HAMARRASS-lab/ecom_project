@@ -32,7 +32,7 @@ public class CustomerProductController {
     }
 
     @GetMapping("/product/{productId}")
-    public  ResponseEntity<ProductDetailsDto> getProductDetailsById(@PathVariable long productId){
+    public  ResponseEntity<ProductDetailsDto> getProductDetailsById(@PathVariable Long productId){
          ProductDetailsDto productDetailsDto=customerProductService.getProductDetailsById(productId);
 
        if(productDetailsDto==null) return  ResponseEntity.notFound().build();

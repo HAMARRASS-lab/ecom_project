@@ -21,13 +21,12 @@ public class Order {
     private Date date ;
     private Long amount;
     private String address;
-    @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus;
     private Long totalAmount;
     private Long discount;
     private UUID trackingId;
 
-    @OneToOne(cascade=CascadeType.MERGE)
+    @OneToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name="user_id", referencedColumnName = "id")
     private User user;
 
@@ -35,7 +34,7 @@ public class Order {
     @JoinColumn(name="coupon_id", referencedColumnName = "id")
     private Coupon coupon;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy="order")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "order")
     private List<CartItems> cartItems;
 
 

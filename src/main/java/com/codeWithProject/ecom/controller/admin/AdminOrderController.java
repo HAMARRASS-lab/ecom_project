@@ -18,20 +18,20 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AdminOrderController {
 
+
     private final AdminOrderService adminOrderService;
 
     @GetMapping("/placeOrders")
     public ResponseEntity<List<OrderDto>> getAllPlaceOrders(){
-        return ResponseEntity.ok(adminOrderService.getAllPlaceOrers());
+        return ResponseEntity.ok(adminOrderService.getAllPlaceOrders());
     }
 
     @GetMapping("/order/{orderId}/{status}")
-    public ResponseEntity<?> changeOrderStatus(@PathVariable long orderID , @PathVariable String status){
-     OrderDto orderDto=adminOrderService.changeOrderStatus(orderID,status);
+    public ResponseEntity<?> changeOrderStatus( @PathVariable Long orderId, @PathVariable String status ){
+     OrderDto orderDto=adminOrderService.changeOrderStatus(orderId,status);
 
      if(orderDto==null)
          return new ResponseEntity<>("Something went wrong", HttpStatus.BAD_REQUEST);
-
      return  ResponseEntity.status(HttpStatus.OK).body(orderDto);
 
     }

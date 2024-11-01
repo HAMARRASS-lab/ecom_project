@@ -6,12 +6,16 @@ import java.io.IOException;
 import java.util.List;
 
 public interface AdminProductService {
-    public ProductDto addProduct(ProductDto productDto);
-    public List<ProductDto> getAllProducts();
 
-    List<ProductDto> getAllProductByName( String name);
-    public boolean deleteProduct(Long id);
+    ProductDto addProduct(ProductDto productDto) throws IOException;
+
+    List<ProductDto> getAllProducts();
+
+    List<ProductDto> getAllProductByName(String name);
+
+    boolean deleteProduct(Long id);
 
     ProductDto getProductById(Long productId);
-    ProductDto updateProduct(Long productId, ProductDto productDto);
+
+    ProductDto updateProduct(Long productId, ProductDto productDto) throws  IOException;
 }
